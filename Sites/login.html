@@ -1,0 +1,15 @@
+<h2>Logowanie</h2>
+<input id="loginUsername" placeholder="Nazwa u¿ytkownika">
+<input id="loginPassword" placeholder="Has³o" type="password">
+<button onclick="login()">Zaloguj siê</button>
+
+<script>
+async function login() {
+    const username = document.getElementById('loginUsername').value;
+    const password = document.getElementById('loginPassword').value;
+
+    // Weryfikacja i zapis do localStorage
+    localStorage.setItem('username', username);
+    window.location.href = 'movies.html';
+}
+</script>
