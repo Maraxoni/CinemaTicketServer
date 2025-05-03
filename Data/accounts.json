@@ -1,0 +1,10 @@
+[
+  {
+    "Username": "testuser",
+    "Password": "password123",
+    "Type": 0,
+    "ReservationIds": [
+      1
+    ]
+  }
+]

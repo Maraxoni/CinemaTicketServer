@@ -1,0 +1,110 @@
+[
+  {
+    "MovieID": 1,
+    "Title": "Inception",
+    "Director": "Christopher Nolan",
+    "Actors": [
+      "Leonardo DiCaprio",
+      "Joseph Gordon-Levitt",
+      "Elliot Page"
+    ],
+    "Description": "A thief who steals corporate secrets through use of dream-sharing technology.",
+    "Poster": null
+  },
+  {
+    "MovieID": 2,
+    "Title": "The Matrix",
+    "Director": "The Wachowskis",
+    "Actors": [
+      "Keanu Reeves",
+      "Laurence Fishburne",
+      "Carrie-Anne Moss"
+    ],
+    "Description": "A computer hacker learns from mysterious rebels about the true nature of his reality.",
+    "Poster": null
+  },
+  {
+    "MovieID": 3,
+    "Title": "Interstellar",
+    "Director": "Christopher Nolan",
+    "Actors": [
+      "Matthew McConaughey",
+      "Anne Hathaway",
+      "Jessica Chastain"
+    ],
+    "Description": "A team of explorers must find a new habitable planet as Earth faces destruction.",
+    "Poster": null
+  },
+  {
+    "MovieID": 4,
+    "Title": "Inception",
+    "Director": "Christopher Nolan",
+    "Actors": [
+      "Leonardo DiCaprio",
+      "Joseph Gordon-Levitt",
+      "Elliot Page"
+    ],
+    "Description": "A thief who steals corporate secrets through use of dream-sharing technology.",
+    "Poster": null
+  },
+  {
+    "MovieID": 5,
+    "Title": "The Matrix",
+    "Director": "The Wachowskis",
+    "Actors": [
+      "Keanu Reeves",
+      "Laurence Fishburne",
+      "Carrie-Anne Moss"
+    ],
+    "Description": "A computer hacker learns from mysterious rebels about the true nature of his reality.",
+    "Poster": null
+  },
+  {
+    "MovieID": 6,
+    "Title": "Interstellar",
+    "Director": "Christopher Nolan",
+    "Actors": [
+      "Matthew McConaughey",
+      "Anne Hathaway",
+      "Jessica Chastain"
+    ],
+    "Description": "A team of explorers must find a new habitable planet as Earth faces destruction.",
+    "Poster": null
+  },
+  {
+    "MovieID": 7,
+    "Title": "Inception",
+    "Director": "Christopher Nolan",
+    "Actors": [
+      "Leonardo DiCaprio",
+      "Joseph Gordon-Levitt",
+      "Elliot Page"
+    ],
+    "Description": "A thief who steals corporate secrets through use of dream-sharing technology.",
+    "Poster": null
+  },
+  {
+    "MovieID": 8,
+    "Title": "The Matrix",
+    "Director": "The Wachowskis",
+    "Actors": [
+      "Keanu Reeves",
+      "Laurence Fishburne",
+      "Carrie-Anne Moss"
+    ],
+    "Description": "A computer hacker learns from mysterious rebels about the true nature of his reality.",
+    "Poster": null
+  },
+  {
+    "MovieID": 9,
+    "Title": "Interstellar",
+    "Director": "Christopher Nolan",
+    "Actors": [
+      "Matthew McConaughey",
+      "Anne Hathaway",
+      "Jessica Chastain"
+    ],
+    "Description": "A team of explorers must find a new habitable planet as Earth faces destruction.",
+    "Poster": null
+  }
+]
