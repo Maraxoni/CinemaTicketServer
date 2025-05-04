@@ -1,10 +1,12 @@
 ﻿using CinemaTicketServer.Classes;
+using CoreWCF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace CinemaTicketServer.Services
 {
+    [ServiceBehavior(IncludeExceptionDetailInFaults = true)]
     public class ReservationService : IReservationService
     {
         private readonly IDatabaseService _databaseService;
@@ -14,17 +16,16 @@ namespace CinemaTicketServer.Services
             _databaseService = databaseService;
         }
 
-        public void AddUser(string username, string password, AccountType accountType)
+        public bool LoginUser()
         {
-            if (_databaseService.GetAccounts().Any(u => u.Username == username))
-            {
-                Console.WriteLine("User already exists.");
-                return;
-            }
+            Console.WriteLine("Logging in.");
+            return true;
+        }
 
-            var newUser = new Account(username, password, accountType);
-            _databaseService.AddAccount(newUser);
-            Console.WriteLine($"User {username} added successfully.");
+        public bool RegisterUser()
+        {
+            Console.WriteLine("Registering.");
+            return true;
         }
 
         public void AddReservation(int screeningId, string username)

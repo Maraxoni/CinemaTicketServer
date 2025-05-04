@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="corewcf.http" Version="1.7.0" />
     <PackageReference Include="corewcf.primitives" Version="1.7.0" />
+	<PackageReference Include="SoapCore" Version="1.2.1.4" />
   </ItemGroup>
 
 </Project>

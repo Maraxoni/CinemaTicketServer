@@ -8,7 +8,9 @@ namespace CinemaTicketServer.Services
     public interface IReservationService
     {
         [OperationContract]
-        void AddUser(string username, string password, AccountType accountType);
+        bool LoginUser();
+        [OperationContract]
+        bool RegisterUser();
         [OperationContract]
         void AddReservation(int ticketId, string customerName);
         [OperationContract]

@@ -3,7 +3,8 @@ using CinemaTicketServer.Services;
 using CoreWCF;
 using CoreWCF.Configuration;
 using CoreWCF.Description;
-using System.Web.Services.Description;
+using CoreWCF.Dispatcher;
+using Microsoft.Extensions.DependencyInjection;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CinemaTicketServer
@@ -25,9 +26,12 @@ namespace CinemaTicketServer
             });
 
             builder.Services.AddSingleton<IDatabaseService, DatabaseService>();
-            builder.Services.AddSingleton<IReservationService, ReservationService>();
+            builder.Services.AddSingleton<ReservationService>();
+            builder.Services.AddSingleton<IDispatchMessageInspector, ServerHandlerInspector>();
+            builder.Services.AddSingleton<IServiceBehavior, GlobalInspectorBehavior>();
             builder.Services.AddServiceModelServices();
             builder.Services.AddServiceModelMetadata();
+
 
             var app = builder.Build();
 
@@ -45,15 +49,18 @@ namespace CinemaTicketServer
             app.UseServiceModel(serviceBuilder =>
             {
                 serviceBuilder.AddService<DatabaseService>();
-                serviceBuilder.AddServiceEndpoint<DatabaseService, IDatabaseService>(binding, "/DatabaseService");
+                serviceBuilder.AddServiceEndpoint<DatabaseService, IDatabaseService>(
+                    binding, "/DatabaseService");
                 serviceBuilder.AddService<ReservationService>();
-                serviceBuilder.AddServiceEndpoint<ReservationService, IReservationService>(binding, "/ReservationService");
+                serviceBuilder.AddServiceEndpoint<ReservationService, IReservationService>(
+                    binding, "/ReservationService");
 
+             
                 var metadataBehavior = app.Services.GetRequiredService<ServiceMetadataBehavior>();
                 metadataBehavior.HttpGetEnabled = true;
-                metadataBehavior.HttpsGetEnabled = false;
-                metadataBehavior.HttpGetUrl = new Uri("http://192.168.50.183:8080/DatabaseService/mex");
+                metadataBehavior.HttpGetUrl = new Uri("http://localhost:8080/DatabaseService/mex");
             });
+
 
             app.Run();
         }
