@@ -1,5 +1,6 @@
 ﻿using CinemaTicketServer.Classes;
 using System.Text.Json;
+using System.Xml.Linq;
 
 namespace CinemaTicketServer.Services
 {
@@ -22,34 +23,81 @@ namespace CinemaTicketServer.Services
             screenings = LoadFromFile<Screening>(ScreeningsFileName);
             accounts = LoadFromFile<Account>(AccountsFileName);
             reservations = LoadFromFile<Reservation>(ReservationsFileName);
+
+            //string name = "Data/lis.webp";
+            //string projectDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
+            //string defaultPosterPath = Path.Combine(projectDirectory, name);
+
+            //Console.WriteLine(defaultPosterPath);
+
+            //if (File.Exists(defaultPosterPath))
+            //{
+            //    // Wczytaj plik do byte[]
+            //    byte[] imageBytes = File.ReadAllBytes(defaultPosterPath);
+
+            //    // Uzupełnij brakujące postery
+            //    foreach (var movie in movies)
+            //    {
+            //        if (movie.Poster == null || movie.Poster.Length == 0)
+            //        {
+            //            movie.Poster = imageBytes;
+            //        }
+            //    }
+
+            //    // Opcjonalnie: Zapisz zaktualizowane dane do pliku (jeśli chcesz od razu zapisać zmiany)
+            //    SaveMovies();
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Plik lis.webp nie został znaleziony.");
+            //}
         }
 
-        public List<Movie> GetMovies() => movies.ToList();
+        public List<Movie> GetMovies() => movies;
         public void AddMovie(Movie movie)
         {
             movies.Add(movie);
             SaveMovies();
         }
 
-        public List<Screening> GetScreenings() => screenings.ToList();
+        public List<Screening> GetScreenings() => screenings;
         public void AddScreening(Screening screening)
         {
             screenings.Add(screening);
             SaveScreenings();
         }
 
-        public List<Account> GetAccounts() => accounts.ToList();
+        public List<Account> GetAccounts() => accounts;
         public void AddAccount(Account account)
         {
             accounts.Add(account);
             SaveAccounts();
         }
 
-        public List<Reservation> GetReservations() => reservations.ToList();
+        public List<Reservation> GetReservations() => reservations;
         public void AddReservation(Reservation reservation)
         {
             reservations.Add(reservation);
+            Console.WriteLine($"Reservation {reservation.ReservationId} made.");
             SaveReservations();
+        }
+
+        public void RemoveReservation(int reservationId)
+        {
+            var reservation = reservations
+                .FirstOrDefault(r => r.ReservationId == reservationId);
+
+            if (reservation == null)
+            {
+                Console.WriteLine($"Reservation {reservationId} not found.");
+                return;
+            }
+
+            reservations.Remove(reservation);
+
+            SaveReservations();
+
+            Console.WriteLine($"Reservation {reservationId} cancelled successfully.");
         }
 
         public void SaveMovies() => SaveToFile(MoviesFileName, movies);

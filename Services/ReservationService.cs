@@ -28,12 +28,16 @@ namespace CinemaTicketServer.Services
             return true;
         }
 
-        public void AddReservation(int screeningId, string username)
+        public void MakeReservation(int screeningId, string username, int[] reservedSeats)
         {
-            var user = _databaseService.GetAccounts().FirstOrDefault(u => u.Username == username);
+            Console.WriteLine(username);
+            var user = _databaseService.GetAccounts().FirstOrDefault(u => u.Username == username);   
+            Console.WriteLine(_databaseService.GetAccounts());
+            Console.WriteLine(user);
+
             if (user == null)
             {
-                Console.WriteLine("User not found.");
+                Console.WriteLine("User not found. ");
                 return;
             }
 
@@ -41,32 +45,68 @@ namespace CinemaTicketServer.Services
                 ? _databaseService.GetReservations().Max(r => r.ReservationId) + 1
                 : 1;
 
-            var reservation = new Reservation(newId, screeningId, _databaseService.GetAccounts().IndexOf(user));
+            var reservation = new Reservation(newId, screeningId, username, reservedSeats);
+
+            var screening = _databaseService.GetScreenings()
+                                    .FirstOrDefault(s => s.ScreeningID == screeningId);
+
+            foreach (var seatIndex in reservedSeats)
+            {
+                if (seatIndex < 0 || seatIndex >= screening.AvailableSeats.Length)
+                    throw new FaultException($"Invalid seat index: {seatIndex}");
+
+                if (!screening.AvailableSeats[seatIndex])
+                    throw new FaultException($"Seat {seatIndex + 1} is already reserved.");
+
+                screening.AvailableSeats[seatIndex] = false;
+            }
 
             _databaseService.AddReservation(reservation);
-            user.AddReservation(reservation.ReservationId);
-            _databaseService.SaveAccounts();
+            _databaseService.SaveReservations();
+            _databaseService.SaveScreenings();
             Console.WriteLine($"Reservation {reservation.ReservationId} created for user {username}.");
         }
 
         public void CancelReservation(int reservationId)
         {
-            var reservation = _databaseService.GetReservations().FirstOrDefault(r => r.ReservationId == reservationId);
+            var reservation = _databaseService
+                .GetReservations()
+                .FirstOrDefault(r => r.ReservationId == reservationId);
+
             if (reservation == null)
             {
-                Console.WriteLine("Reservation not found.");
+                Console.WriteLine($"Reservation {reservationId} not found.");
                 return;
             }
 
-            var user = _databaseService.GetAccounts().ElementAtOrDefault(reservation.AccountId);
+            var user = _databaseService
+                .GetAccounts()
+                .FirstOrDefault(u => u.Username == reservation.AccountUsername);
+
             if (user != null)
             {
-                user.ReservationIds.Remove(reservationId);
+                _databaseService.RemoveReservation(reservationId);
+                _databaseService.SaveAccounts();
+            }
+            else
+            {
+                Console.WriteLine($"User '{reservation.AccountUsername}' not found.");
             }
 
-            _databaseService.GetReservations().Remove(reservation);
-            _databaseService.SaveReservations();
-            _databaseService.SaveAccounts();
+            var screening = _databaseService.GetScreenings()
+                                    .FirstOrDefault(s => s.ScreeningID == reservation.ScreeningId);
+            Console.WriteLine("Screening Check: " + screening);
+            if (screening != null)
+            {
+                foreach (var seatIndex in reservation.ReservedSeats)
+                {
+                    if (seatIndex >= 0 && seatIndex < screening.AvailableSeats.Length)
+                    {
+                        screening.AvailableSeats[seatIndex] = true;
+                    }
+                }
+                _databaseService.SaveScreenings();
+            }
 
             Console.WriteLine($"Reservation {reservationId} cancelled successfully.");
         }

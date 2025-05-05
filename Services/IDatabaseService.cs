@@ -33,6 +33,8 @@ namespace CinemaTicketServer.Services
         [OperationContract]
         void AddReservation(Reservation reservation);
         [OperationContract]
+        void RemoveReservation(int reservationId);
+        [OperationContract]
         void SaveReservations();
     }
 }

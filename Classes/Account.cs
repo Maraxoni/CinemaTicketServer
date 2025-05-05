@@ -18,25 +18,12 @@ namespace CinemaTicketServer.Classes
         public string Password { get; set; }
         [DataMember]
         public AccountType Type { get; set; }
-        [DataMember]
-        public HashSet<int> ReservationIds { get; set; }
 
         public Account(string username, string password, AccountType type)
         {
             Username = username;
             Password = password;
             Type = type;
-            ReservationIds = new HashSet<int>();
-        }
-
-        public void AddReservation(int reservationId)
-        {
-            ReservationIds.Add(reservationId);
-        }
-
-        public bool HasReservation(int reservationId)
-        {
-            return ReservationIds.Contains(reservationId);
         }
 
         public bool IsAdmin()

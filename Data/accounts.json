@@ -1,70 +1,7 @@
 [
   {
-    "Username": "testuser",
-    "Password": "password123",
-    "Type": 0,
-    "ReservationIds": [
-      1
-    ]
-  },
-  {
-    "Username": "Amon",
-    "Password": "Gus",
-    "Type": 0,
-    "ReservationIds": []
-  },
-  {
-    "Username": "Gus",
-    "Password": "Fring",
-    "Type": 0,
-    "ReservationIds": []
-  },
-  {
-    "Username": "Guss",
-    "Password": "Guss",
-    "Type": 0,
-    "ReservationIds": []
-  },
-  {
-    "Username": "Sus",
-    "Password": "Amogus",
-    "Type": 0,
-    "ReservationIds": []
-  },
-  {
-    "Username": "Arombus",
-    "Password": "Amogus",
-    "Type": 0,
-    "ReservationIds": []
-  },
-  {
-    "Username": "Arombusa",
-    "Password": "Amogus",
-    "Type": 0,
-    "ReservationIds": []
-  },
-  {
-    "Username": "Arombusaa",
-    "Password": "Amogus",
-    "Type": 0,
-    "ReservationIds": []
-  },
-  {
-    "Username": "Arombusaaa",
-    "Password": "Amogus",
-    "Type": 0,
-    "ReservationIds": []
-  },
-  {
-    "Username": "Arombusaaaa",
-    "Password": "Amogus",
-    "Type": 0,
-    "ReservationIds": []
-  },
-  {
-    "Username": "sadfsdfa",
-    "Password": "asdfasdf",
-    "Type": 0,
-    "ReservationIds": []
+    "Username": "user",
+    "Password": "123",
+    "Type": 0
   }
 ]
