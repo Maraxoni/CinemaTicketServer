@@ -24,33 +24,30 @@ namespace CinemaTicketServer.Services
             accounts = LoadFromFile<Account>(AccountsFileName);
             reservations = LoadFromFile<Reservation>(ReservationsFileName);
 
-            //string name = "Data/lis.webp";
-            //string projectDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
-            //string defaultPosterPath = Path.Combine(projectDirectory, name);
+        }
 
-            //Console.WriteLine(defaultPosterPath);
+        public void ChangePoster(int movieId, string fileName)
+        {
+            string name = Path.Combine("Data/", fileName);
+            string projectDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
+            string defaultPosterPath = Path.Combine(projectDirectory, name);
 
-            //if (File.Exists(defaultPosterPath))
-            //{
-            //    // Wczytaj plik do byte[]
-            //    byte[] imageBytes = File.ReadAllBytes(defaultPosterPath);
+            var movie = movies.FirstOrDefault(m => m.MovieID == movieId);
 
-            //    // Uzupełnij brakujące postery
-            //    foreach (var movie in movies)
-            //    {
-            //        if (movie.Poster == null || movie.Poster.Length == 0)
-            //        {
-            //            movie.Poster = imageBytes;
-            //        }
-            //    }
+            Console.WriteLine(defaultPosterPath);
 
-            //    // Opcjonalnie: Zapisz zaktualizowane dane do pliku (jeśli chcesz od razu zapisać zmiany)
-            //    SaveMovies();
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Plik lis.webp nie został znaleziony.");
-            //}
+            if (File.Exists(defaultPosterPath) && movie != null)
+            {
+                byte[] imageBytes = File.ReadAllBytes(defaultPosterPath);
+
+                movie.Poster = imageBytes;
+
+                SaveMovies();
+            }
+            else
+            {
+                Console.WriteLine("Plik lub film nie został znaleziony.");
+            }
         }
 
         public List<Movie> GetMovies() => movies;

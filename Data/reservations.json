@@ -121,7 +121,14 @@
     "ScreeningId": 0,
     "AccountUsername": "user",
     "ReservedSeats": [
-      68
+      28,
+      29,
+      27,
+      26,
+      30,
+      68,
+      50,
+      69
     ]
   }
 ]

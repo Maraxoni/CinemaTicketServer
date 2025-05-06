@@ -8,6 +8,8 @@ namespace CinemaTicketServer.Services
     public interface IDatabaseService
     {
         [OperationContract]
+        void ChangePoster(int movieId, string fileName);
+        [OperationContract]
         List<Movie> GetMovies();
         [OperationContract]
         void AddMovie(Movie movie);

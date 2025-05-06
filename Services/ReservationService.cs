@@ -110,5 +110,42 @@ namespace CinemaTicketServer.Services
 
             Console.WriteLine($"Reservation {reservationId} cancelled successfully.");
         }
+        public void EditReservation(int reservationId, int screeningId, string username, int[] reservedSeats)
+        {
+            var reservation = _databaseService.GetReservations()
+                .FirstOrDefault(r => r.ReservationId == reservationId);
+
+            if (reservation == null)
+                throw new FaultException($"Reservation with ID {reservationId} not found.");
+
+            var screening = _databaseService.GetScreenings()
+                .FirstOrDefault(s => s.ScreeningID == screeningId);
+
+            if (screening == null)
+                throw new FaultException($"Screening with ID {screeningId} not found.");
+
+            foreach (var seat in reservation.ReservedSeats)
+            {
+                if (seat >= 0 && seat < screening.AvailableSeats.Length)
+                    screening.AvailableSeats[seat] = true;
+            }
+
+            foreach (var seat in reservedSeats)
+            {
+                if (seat < 0 || seat >= screening.AvailableSeats.Length || !screening.AvailableSeats[seat])
+                    throw new FaultException($"Seat {seat + 1} is not available.");
+            }
+
+            foreach (var seat in reservedSeats)
+            {
+                screening.AvailableSeats[seat] = false;
+            }
+
+            reservation.ScreeningId = screeningId;
+            reservation.ReservedSeats = reservedSeats.ToList();
+
+            _databaseService.SaveReservations();
+            _databaseService.SaveScreenings();
+        }
     }
 }
