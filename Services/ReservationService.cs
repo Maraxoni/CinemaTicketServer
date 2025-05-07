@@ -30,7 +30,7 @@ namespace CinemaTicketServer.Services
 
         public void MakeReservation(int screeningId, string username, int[] reservedSeats)
         {
-            Console.WriteLine(username);
+            Console.WriteLine("ID: " + screeningId);
             var user = _databaseService.GetAccounts().FirstOrDefault(u => u.Username == username);   
             Console.WriteLine(_databaseService.GetAccounts());
             Console.WriteLine(user);

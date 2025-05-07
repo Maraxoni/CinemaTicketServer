@@ -12,7 +12,7 @@ namespace CinemaTicketServer.Services
         [OperationContract]
         bool RegisterUser();
         [OperationContract]
-        void MakeReservation(int ticketId, string customerName, int[] reservedSeats);
+        void MakeReservation(int screeningId, string customerName, int[] reservedSeats);
         [OperationContract]
         void CancelReservation(int reservationId);
         [OperationContract]

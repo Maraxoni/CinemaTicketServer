@@ -126,9 +126,18 @@
       27,
       26,
       30,
-      68,
-      50,
-      69
+      7,
+      8,
+      9
+    ]
+  },
+  {
+    "ReservationId": 15,
+    "ScreeningId": 1,
+    "AccountUsername": "user",
+    "ReservedSeats": [
+      48,
+      46
     ]
   }
 ]

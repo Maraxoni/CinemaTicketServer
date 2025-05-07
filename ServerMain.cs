@@ -1,10 +1,13 @@
 ﻿using CinemaTicketServer.Classes;
 using CinemaTicketServer.Services;
 using CoreWCF;
+using CoreWCF.Channels;
 using CoreWCF.Configuration;
 using CoreWCF.Description;
 using CoreWCF.Dispatcher;
 using Microsoft.Extensions.DependencyInjection;
+using System.Net;
+using System.Web.Services.Description;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CinemaTicketServer
@@ -14,6 +17,16 @@ namespace CinemaTicketServer
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.Listen(IPAddress.Loopback, 8080);
+                options.Listen(IPAddress.Parse("192.168.50.225"), 8081, listenOptions =>
+                {
+                    listenOptions.UseHttps("cert.pfx", "haslo_do_cert");
+                });
+            });
+
 
             builder.Services.AddCors(options =>
             {
@@ -32,16 +45,19 @@ namespace CinemaTicketServer
             builder.Services.AddServiceModelServices();
             builder.Services.AddServiceModelMetadata();
 
-
             var app = builder.Build();
-
-            //app.Urls.Add("http://192.168.50.183:8080");
-            app.Urls.Add("http://localhost:8080");
 
             app.UseCors("AllowAllOrigins");
             app.UseRouting();
 
-            var binding = new BasicHttpBinding
+            // HTTP binding without security
+            var httpBinding = new BasicHttpBinding(BasicHttpSecurityMode.None)
+            {
+                MessageEncoding = WSMessageEncoding.Text
+            };
+
+            // HTTPS binding with security
+            var httpsBinding = new BasicHttpBinding(BasicHttpSecurityMode.Transport)
             {
                 MessageEncoding = WSMessageEncoding.Text
             };
@@ -49,18 +65,19 @@ namespace CinemaTicketServer
             app.UseServiceModel(serviceBuilder =>
             {
                 serviceBuilder.AddService<DatabaseService>();
-                serviceBuilder.AddServiceEndpoint<DatabaseService, IDatabaseService>(
-                    binding, "/DatabaseService");
-                serviceBuilder.AddService<ReservationService>();
-                serviceBuilder.AddServiceEndpoint<ReservationService, IReservationService>(
-                    binding, "/ReservationService");
+                serviceBuilder.AddServiceEndpoint<DatabaseService, IDatabaseService>(httpsBinding, "/DatabaseService");
+                serviceBuilder.AddServiceEndpoint<DatabaseService, IDatabaseService>(httpBinding, "/DatabaseService");
 
-             
+                serviceBuilder.AddService<ReservationService>();
+                serviceBuilder.AddServiceEndpoint<ReservationService, IReservationService>(httpsBinding, "/ReservationService");
+                serviceBuilder.AddServiceEndpoint<ReservationService, IReservationService>(httpBinding, "/ReservationService");
+
                 var metadataBehavior = app.Services.GetRequiredService<ServiceMetadataBehavior>();
                 metadataBehavior.HttpGetEnabled = true;
-                metadataBehavior.HttpGetUrl = new Uri("http://localhost:8080/DatabaseService/mex");
+                metadataBehavior.HttpsGetEnabled = true;
+                metadataBehavior.HttpGetUrl = new Uri("http://localhost:8080");
+                metadataBehavior.HttpsGetUrl = new Uri("https://192.168.50.225:8081");
             });
-
 
             app.Run();
         }
