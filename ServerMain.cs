@@ -23,7 +23,7 @@ namespace CinemaTicketServer
                 options.AllowSynchronousIO = true;
 
                 options.Listen(IPAddress.Loopback, 8080);
-                options.Listen(IPAddress.Parse("192.168.50.225"), 8081, listenOptions =>
+                options.Listen(IPAddress.Parse("192.168.19.154"), 8081, listenOptions =>
                 {
                     listenOptions.UseHttps("cert.pfx", "haslo_do_cert");
                 });
@@ -78,7 +78,7 @@ namespace CinemaTicketServer
                 metadataBehavior.HttpGetEnabled = true;
                 metadataBehavior.HttpsGetEnabled = true;
                 metadataBehavior.HttpGetUrl = new Uri("http://localhost:8080");
-                metadataBehavior.HttpsGetUrl = new Uri("https://192.168.50.225:8081");
+                metadataBehavior.HttpsGetUrl = new Uri("https://192.168.19.154:8081");
             });
 
             app.Run();

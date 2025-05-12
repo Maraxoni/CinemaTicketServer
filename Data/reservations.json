@@ -127,8 +127,15 @@
     "ScreeningId": 1,
     "AccountUsername": "user",
     "ReservedSeats": [
+      70,
+      69,
+      68,
+      29,
       48,
-      46
+      67,
+      50,
+      71,
+      49
     ]
   }
 ]
