@@ -24,6 +24,15 @@ namespace CinemaTicketServer.Services
             accounts = LoadFromFile<Account>(AccountsFileName);
             reservations = LoadFromFile<Reservation>(ReservationsFileName);
 
+            //ChangePoster(1, "inception.jpg");
+            //ChangePoster(2, "matrix.jpg");
+            //ChangePoster(3, "interstellar.webp");
+            //ChangePoster(4, "pulpfiction.jpg");
+            //ChangePoster(5, "shawshank.jpg");
+            //ChangePoster(6, "godfather.jpg");
+            //ChangePoster(7, "fightclub.jpg");
+            //ChangePoster(8, "forrestgump.jpg");
+            //ChangePoster(9, "batman.jpg");
         }
 
         public void ChangePoster(int movieId, string fileName)
@@ -46,7 +55,7 @@ namespace CinemaTicketServer.Services
             }
             else
             {
-                Console.WriteLine("Plik lub film nie został znaleziony.");
+                Console.WriteLine("File not found. ");
             }
         }
 

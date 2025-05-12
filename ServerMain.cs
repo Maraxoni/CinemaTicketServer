@@ -20,6 +20,8 @@ namespace CinemaTicketServer
 
             builder.WebHost.ConfigureKestrel(options =>
             {
+                options.AllowSynchronousIO = true;
+
                 options.Listen(IPAddress.Loopback, 8080);
                 options.Listen(IPAddress.Parse("192.168.50.225"), 8081, listenOptions =>
                 {

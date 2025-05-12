@@ -77,11 +77,10 @@ public class ServerHandlerInspector : IDispatchMessageInspector
                 ? "SI2: Reply for successful operation"
                 : "SI2: Reply for failed operation");
 
-            // Dodanie niestandardowego nagłówka SOAP
             var header = MessageHeader.CreateHeader(
-                "OperationStatus", // Nazwa nagłówka
-                "http://tempuri.org/soapheaders", // Przestrzeń nazw
-                isSuccess ? "Success" : "Failure" // Wartość nagłówka
+                "OperationStatus",
+                "http://tempuri.org/soapheaders",
+                isSuccess ? "Success" : "Failure"
             );
             reply.Headers.Add(header);
         }

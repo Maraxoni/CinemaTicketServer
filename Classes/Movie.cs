@@ -46,7 +46,6 @@ namespace CinemaTicketServer.Classes
             Description = description;
             Poster = poster;
 
-            // Aktualizuj lastId jeśli to potrzebne
             if (movieID > lastId)
             {
                 lastId = movieID;
